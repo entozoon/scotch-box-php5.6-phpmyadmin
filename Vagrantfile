@@ -51,9 +51,11 @@ Vagrant.configure("2") do |config|
             sudo apt-get -y install phpmyadmin
         fi
 
-        echo "Updating some PHP Variables"
-        sudo sed -i 's/upload_max_filesize\s*=.*/upload_max_filesize=999M/g' /etc/php5/apache2/php.inline
-        sudo sed -i 's/upload_max_filesize\s*=.*/post_max_filesize=999M/g' /etc/php5/apache2/php.inlineg
+        echo "Updating some PHP Variables" to allow beefier phpMyAdmin imports
+        sudo sed -i 's/upload_max_filesize\s*=.*/upload_max_filesize=999M/g' /etc/php5/apache2/php.ini
+        sudo sed -i 's/post_max_size\s*=.*/post_max_size=999M/g' /etc/php5/apache2/php.ini
+        sudo sed -i 's/post_max_filesize\s*=.*/post_max_filesize=999M/g' /etc/php5/apache2/php.ini
+        sudo sed -i 's/php_admin_value open_basedir/#nope to open_basedir/g' /etc/phpmyadmin/apache.conf
 
         echo "Restarting Apache after all the changes"
         sudo service apache2 restart
