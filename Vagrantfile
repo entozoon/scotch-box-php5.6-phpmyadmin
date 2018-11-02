@@ -51,11 +51,9 @@ Vagrant.configure("2") do |config|
             sudo apt-get -y install phpmyadmin
         fi
 
-        echo "Creating database, if it doesn't already exist"
-        mysql -uroot -p$mysqlpassword -e "CREATE DATABASE IF NOT EXISTS $sitename;"
-
         echo "Updating some PHP Variables"
         sudo sed -i 's/upload_max_filesize\s*=.*/upload_max_filesize=999M/g' /etc/php5/apache2/php.inline
+        sudo sed -i 's/upload_max_filesize\s*=.*/post_max_filesize=999M/g' /etc/php5/apache2/php.inlineg
 
         echo "Restarting Apache after all the changes"
         sudo service apache2 restart
