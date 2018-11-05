@@ -1,3 +1,7 @@
+#
+# https://github.com/jonathanbossenger/scotch-box/
+#
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -8,7 +12,7 @@ settings = YAML.load_file 'vagrant.yml'
 Vagrant.configure("2") do |config|
 
     config.vm.box = "scotch/box"
-    config.vm.box_version = "2.0"
+    config.vm.box_version = "2.5"
     config.vm.network "private_network", ip: settings['site']['ip']
     config.vm.hostname = settings['site']['sitename']
     config.vm.synced_folder "./", "/var/www/public", :mount_options => ["dmode=777", "fmode=666"]
@@ -41,7 +45,7 @@ Vagrant.configure("2") do |config|
         then
             echo "PHPMyAdmin already installed."
         else
-            echo "Installing PHPMyAdmin..."
+            echo "Installing phpMyAdmin..."
             mysql -uroot -proot -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$mysqlpassword'); FLUSH PRIVILEGES;"
             sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/dbconfig-install boolean true"
             sudo debconf-set-selections <<< "phpmyadmin phpmyadmin/app-password-confirm password $mysqlpassword"
